@@ -1,4 +1,3 @@
-import React from "react";
 import type { Movie } from "../data/movies";
 
 interface MovieCardProps {
