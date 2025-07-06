@@ -1,4 +1,3 @@
-import { useSearchParams } from "react-router";
 import { MovieCard } from "./MovieCard";
 import type { Movie } from "../data/movies";
 
@@ -8,21 +7,17 @@ interface MovieListProps {
 }
 
 export function MovieList({ movies, title }: MovieListProps) {
-  const [searchParams] = useSearchParams();
-  const q = searchParams.get("q") || "";
-  
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(q.toLowerCase())
-  );
-
   return (
     <main className="main-content">
       <h1 className="featured-title">{title}</h1>
       <div className="movie-list">
-        {filteredMovies.length === 0 ? (
-          <div style={{ color: '#b3b3b3', fontSize: '1.2rem' }}>No results found.</div>
+        {movies.length === 0 ? (
+          <div className="no-results">
+            <p>No movies found matching your search.</p>
+            <p>Try adjusting your search terms or browse all movies.</p>
+          </div>
         ) : (
-          filteredMovies.map((movie) => (
+          movies.map((movie) => (
             <MovieCard key={movie.title} movie={movie} />
           ))
         )}
