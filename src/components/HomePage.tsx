@@ -1,21 +1,10 @@
 import { MovieList } from "./MovieList";
 import { movies } from "../data/movies";
-import { Link, useOutletContext } from "react-router";
+import { Link } from "react-router";
 import { auth } from "../utils/auth";
 
 export function HomePage() {
   const user = auth.getUser();
-  const { q } = useOutletContext<{ q: string }>();
-  
-  // Filter featured movies based on search query (if user is logged in)
-  const featuredMovies = user && q 
-    ? movies.filter(movie => 
-        movie.title.toLowerCase().includes(q.toLowerCase()) ||
-        movie.year.toString().includes(q)
-      ).slice(0, 6)
-    : movies.slice(0, 6);
-
-  const title = user && q ? `Search Results for "${q}"` : "Featured Movies";
   
   return (
     <div className="main-content">
@@ -36,7 +25,7 @@ export function HomePage() {
           </Link>
         )}
       </div>
-      <MovieList movies={featuredMovies} title={title} />
+      <MovieList movies={movies.slice(0, 6)} title="Featured Movies" />
     </div>
   );
 } 

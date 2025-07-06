@@ -1,28 +1,21 @@
 import React from "react";
-import { Link, Outlet, useSearchParams, useNavigate } from "react-router";
+import { Link, Outlet, useNavigate, useSearchParams } from "react-router";
 import { auth } from "../utils/auth";
 
 export function Layout() {
-  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const q = searchParams.get("q") || "";
+  const [searchParams, setSearchParams] = useSearchParams();
   const user = auth.getUser();
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    
-    // If user is not authenticated and tries to search, redirect to login
-    if (!user && value.trim()) {
-      navigate('/login');
-      return;
-    }
-    
-    setSearchParams(value ? { q: value } : {});
-  };
+  const q = searchParams.get("q") || "";
 
   const handleLogout = () => {
     auth.logout();
     navigate('/login');
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams(e.target.value ? { q: e.target.value } : {});
   };
 
   return (
@@ -35,25 +28,27 @@ export function Layout() {
           {!user && <Link to="/login">Login</Link>}
         </nav>
         <div className="header-right">
-          <input
-            className="search"
-            type="text"
-            placeholder={user ? "Search" : "Login to search"}
-            value={q}
-            onChange={handleSearchChange}
-            disabled={!user}
-          />
           {user && (
-            <div className="user-info">
-              <span className="username">Welcome, {user.username}!</span>
-              <button onClick={handleLogout} className="logout-button">
-                Logout
-              </button>
-            </div>
+            <>
+              <input
+                className="search"
+                type="text"
+                placeholder="Search"
+                value={q}
+                onChange={handleSearchChange}
+                style={{ marginRight: 16 }}
+              />
+              <div className="user-info">
+                <span className="username">Welcome, {user.username}!</span>
+                <button onClick={handleLogout} className="logout-button">
+                  Logout
+                </button>
+              </div>
+            </>
           )}
         </div>
       </header>
-      <Outlet context={{ q }} />
+      <Outlet />
     </div>
   );
 } 
