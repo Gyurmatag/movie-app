@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider, redirect } from "react-router";
 import { Layout } from "./components/Layout";
-import { HomePage } from "./components/HomePage";
-import { MoviesPage } from "./components/MoviesPage";
-import { LoginPage } from "./components/LoginPage";
+import { MoviesPage } from "./pages/MoviesPage";
+import { LoginPage } from "./pages/LoginPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { auth } from "./utils/auth";
 import "./App.css";
+import { HomePage } from "./pages/HomePage";
 
 // Loader function to check authentication
 const requireAuth = () => {

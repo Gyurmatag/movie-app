@@ -1,4 +1,4 @@
-import { MovieList } from "./MovieList";
+import { MovieList } from "../components/MovieList";
 import { movies } from "../data/movies";
 import { useSearchParams } from "react-router";
 

@@ -1,4 +1,4 @@
-import { MovieList } from "./MovieList";
+import { MovieList } from "../components/MovieList";
 import { movies } from "../data/movies";
 import { Link } from "react-router";
 import { auth } from "../utils/auth";
